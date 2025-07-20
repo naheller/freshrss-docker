@@ -1,0 +1,23 @@
+volumes:
+  data:
+  extensions:
+
+services:
+  freshrss:
+    image: freshrss/freshrss:latest
+    #   context: https://github.com/FreshRSS/FreshRSS.git#latest
+    #   dockerfile: Docker/Dockerfile-Alpine
+    container_name: freshrss
+    hostname: freshrss
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: 10m
+    volumes:
+      - data:/var/www/FreshRSS/data
+      - ./extensions:/var/www/FreshRSS/extensions
+    ports:
+      - 8080:80
+    environment:
+      TZ: America/New_York
+      CRON_MIN: '*/30'
